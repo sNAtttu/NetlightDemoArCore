@@ -6,6 +6,8 @@ using System.Linq;
 
 public class TextGenerator : MonoBehaviour
 {
+    public GameObject droid;
+
     public Vector3 playerStartPosition;
     public Vector3 playerCurrentPosition;
     public Vector3 virtualObjectPosition;
@@ -22,6 +24,20 @@ public class TextGenerator : MonoBehaviour
     {
         float distance = Vector3.Distance(playerStartPosition, playerCurrentPosition);
         float distanceToVirtualObject = Vector3.Distance(playerCurrentPosition, virtualObjectPosition);
+
+        if(distanceToVirtualObject < 0.5)
+        {
+            droid.GetComponent<Animator>().SetBool("Angry", true);
+        }
+        else if(distanceToVirtualObject > 2)
+        {
+            droid.GetComponent<Animator>().SetBool("Scared", true);
+        }
+        else
+        {
+            droid.GetComponent<Animator>().SetBool("Angry", false);
+            droid.GetComponent<Animator>().SetBool("Scared", false);
+        }
 
         distanceWalkedText.SetText(string.Format("Distance From Startup: {0}m", distance));
         distanceToVirtualObjectText.SetText(string.Format("Distance to Virtual Object: {0}m", distanceToVirtualObject));
